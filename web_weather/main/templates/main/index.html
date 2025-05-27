@@ -1,0 +1,35 @@
+{% extends "main/base.html" %}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    {% block title %} Главная {% endblock %}
+</head>
+    {% block body %}
+    <div class="container">
+        <div class="form-container">
+            <form method="post">
+                {% csrf_token %}
+                <label for="city_name">Введите название города:</label>
+                <input type="text" id="city_name" name="city_name">
+                <button type="submit">ГОТОВО</button>
+            </form>
+        </div>
+
+        {% if weather %}
+            <div class="result">
+                <h2>Погода в {{ city|title }}:</h2>
+                <p>{{ weather }}</p>
+            </div>
+        {% endif %}
+
+        <h3>Города и количество упоминаний:</h3>
+            <ul>
+                {% for city in cities %}
+                    <li>{{ city.name|title }} — {{ city.mention_count }} упоминаний</li>
+                {% empty %}
+                    <li>Пока нет городов.</li>
+                {% endfor %}
+            </ul>
+    </div>
+{% endblock %}
+</html>
